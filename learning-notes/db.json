@@ -3,7 +3,7 @@
     {
       "id": 1,
       "content": "HTML is easy",
-      "important": false
+      "important": true
     },
     {
       "id": 2,
@@ -16,24 +16,14 @@
       "important": true
     },
     {
-      "important": false,
-      "content": "sample note for testing",
+      "important": true,
+      "content": "tester",
       "id": 4
     },
     {
-      "important": true,
-      "content": "Notes",
-      "id": 5
-    },
-    {
-      "important": true,
-      "content": "Pets for sale only 50 cents",
-      "id": 6
-    },
-    {
       "important": false,
-      "content": "gdfadfsdfgsdfg",
-      "id": 7
+      "content": "moze nie moze tak",
+      "id": 6
     }
   ]
 }

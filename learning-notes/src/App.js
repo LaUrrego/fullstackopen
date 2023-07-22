@@ -15,6 +15,7 @@ const App = () => {
         setNotes(initialNotes)
       })
   }, [])
+
   console.log('render', notes.length, 'notes')
 
   const notesToShow = showAll 
@@ -37,11 +38,19 @@ const App = () => {
         console.log(response)
         setNewNote("a new note...")
       })
+  }
+
+  const removeNote = (id) => {
+    console.log("id from remove:", id)
+
+    noteService
+      .remove(id)
+      .then(response => console.log("success",response),
+      setNotes(notes.filter(n=> n.id != id))
+      )
+      .catch(error => console.log(error))
+
     
-    /*setNotes(notes.concat(noteObject))
-    /*returns the placeholder to default 
-    setNewNote("a new note...")
-    console.log(notes)*/
   }
 
   const handleNoteChange = (event) => {
@@ -57,6 +66,10 @@ const App = () => {
       .then(response => {
         setNotes(notes.map(n => n.id !== id? n : response))
       })
+      .catch(error=>{
+        alert(error, `Note: ${note.content} was already deleted from the server!`)
+        setNotes(notes.filter(n=> n.id != id))
+      })
     
   } 
   
@@ -70,7 +83,7 @@ const App = () => {
       </div>
       <ul>
         {notesToShow.map( note =>
-          <Note key={note.id} note={note} toggleImportance={()=>toggleImportanceOf(note.id)}/>
+          <Note key={note.id} note={note} toggleImportance={()=>toggleImportanceOf(note.id)} remove={()=>removeNote(note.id)}/>
           )}
       </ul>
       <form>
