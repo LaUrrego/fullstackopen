@@ -18,11 +18,11 @@ const remove = (id) => {
     return request.then(response => response)
 }
 
-const update = (newPhoneObject) => {
-    console.log("received personObject", newPhoneObject)
+const update = (person) => {
+    console.log("received personObject", person)
 
-    const request = axios.put(`${baseURL}/${newPhoneObject.id}`, newPhoneObject)
-    return request.then(response => response)
+    const request = axios.put(`${baseURL}/${person.id}`, person)
+    return request.then(response => response.data).catch(response => console.log("ERROR:", response))
 }
 
 export default {getAll, addNew, remove, update} 

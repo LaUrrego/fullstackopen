@@ -26,18 +26,13 @@
       "id": 5
     },
     {
-      "name": "test",
-      "number": "444-000-85768",
-      "id": 6
-    },
-    {
       "name": "yes another test",
       "number": "444-66-3-5553-4",
       "id": 7
     },
     {
-      "name": "test ",
-      "number": "1",
+      "name": "test",
+      "number": "5",
       "id": 8
     }
   ]
