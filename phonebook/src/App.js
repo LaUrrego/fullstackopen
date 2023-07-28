@@ -2,14 +2,18 @@ import {useState, useEffect} from 'react'
 import Filter from './components/Filter'
 import Form from './components/Form'
 import Persons from './components/Persons'
-
+import Notification from './components/Notification'
 import services from './services/server'
+import "./index.css"
+
 
 const App = ()=> {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [filterName, setFilterName] = useState('')
+  const [alertMessage, setAlertMessage] = useState(null)
+  const [alertType, setAlertType] = useState("null")
 
   useEffect(()=> {
     services 
@@ -32,7 +36,14 @@ const App = ()=> {
 
       if (personExists.number === newPhone){
        
-        alert(`${newName} was already entered!`);
+        const existMessage = `${newName} was already entered!`;
+        
+        setAlertType("error")
+        setAlertMessage(existMessage)
+        setTimeout(() => {
+          setAlertMessage(null);
+          setAlertType(null);
+        }, 5000)
       
       } else {
 
@@ -47,7 +58,12 @@ const App = ()=> {
             setNewName("");
             setNewPhone("");
           })
-
+          setAlertType("alert")
+          setAlertMessage(`${newName}'s number was updated successfully to ${newPhone}!`)
+          setTimeout(()=>{
+            setAlertType(null);
+            setAlertMessage(null);
+          }, 5000)
         }
       }} else {
     
@@ -64,6 +80,13 @@ const App = ()=> {
  
       )
       .catch(error => console.log("There was an error:", error))
+
+      setAlertType("alert")
+      setAlertMessage(`${newName} was added successfully to the phonebook!`)
+      setTimeout(()=>{
+        setAlertType(null);
+        setAlertMessage(null);
+      }, 5000)
     
   }
   }
@@ -96,8 +119,23 @@ const App = ()=> {
       console.log("confirmed delete")
       services
         .remove(person.id)
-        .then(response => console.log("success!", response),
-          setPersons(persons.filter(p => p.id !== person.id)))
+        .then(response => {console.log("success!", response);
+          setPersons(persons.filter(p => p.id !== person.id));
+          setAlertType('alert');
+          setAlertMessage(`${person.name}, was successfully deleted from server.`)
+          setTimeout(()=>{
+            setAlertType(null);
+            setAlertMessage(null);
+          }, 5000)})
+        .catch(error => {
+          console.log("action failed!!!:",error);
+          setAlertType('error');
+          setAlertMessage(`Error: ${error.message}, ${person.name} was already deleted from server `)
+          setTimeout(()=>{
+            setAlertType(null);
+            setAlertMessage(null);
+          }, 5000)
+        })
     } 
   }
 
@@ -106,6 +144,7 @@ const App = ()=> {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={alertMessage} type={alertType} />
       <Filter handler={updateFilter} value={filterName} />
       <h2>Add New</h2>
       <Form nameVal={newName} nameHandle={updateName} numVal={newPhone} numHandle={updatePhone} submitHandle={submitHandle} />
