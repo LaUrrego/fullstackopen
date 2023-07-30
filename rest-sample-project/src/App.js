@@ -48,7 +48,7 @@ function App() {
     .catch(error => console.log("ERROR:", error))
   },[])
 
- 
+  
 
   const searchHandler = (event) => {
     console.log("search term: ", event.target.value);
