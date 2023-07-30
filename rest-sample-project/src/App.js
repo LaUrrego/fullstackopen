@@ -38,16 +38,17 @@ function App() {
   const [filterRes, setFilterRes] = useState([])
   
   const URL = "https://studies.cs.helsinki.fi/restcountries/api/all"
+ 
 
   useEffect(()=> {
     const request = axios.get(`${URL}`)
     request.then(response => {
-
       setCountries(response.data)
-      
     })
     .catch(error => console.log("ERROR:", error))
   },[])
+
+ 
 
   const searchHandler = (event) => {
     console.log("search term: ", event.target.value);
