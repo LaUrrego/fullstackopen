@@ -21,6 +21,14 @@ let notes = [
 
 app.use(express.json())
 
+// middleware to log bad requests
+const unknownEndPoint = (request, response) => {
+  response.status(404).send({error: 'unknown endpoint'})
+
+}
+
+
+
 // default home message
 app.get('/', (request, response) => {
     response.send('<h1>Hello World!</h1>')
@@ -84,6 +92,8 @@ app.post('/api/notes', (request, response) => {
     response.json(note)
 
 })
+
+app.use(unknownEndPoint)
 
 const PORT = 3001
 app.listen(PORT, () =>{

@@ -1,4 +1,6 @@
 const express = require('express')
+const morgan = require('morgan')
+
 const app = express()
 
 let phonebook = [
@@ -25,6 +27,11 @@ let phonebook = [
 ]
 
 app.use(express.json())
+
+// testing middleware
+morgan.token("body", (req, res)=>{return JSON.stringify({"name":req.body.name, "number":req.body.number})})
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
+
 
 
 app.get('/',(request, response) => {
