@@ -1,22 +1,16 @@
-const Hello = (props) => {
-  console.log(props)
-  return(
-    <div>
-      <p>Hello world {props.name}, you are {props.age} years old</p>
-    </div>
-  )
-}
+import { useState } from "react"
 
 
 const App = () => {
-  const name = 'Peter'
-  const age = 10
+  const [left, setLeft] = useState(0)
+  const [right, setRight] = useState(0)
 
   return(
     <div>
-      <p>Greetings</p>
-      <Hello name='Maya' age={26 + 10} />
-      <Hello name={name} age={age} />
+      {left}
+      <button onClick={()=>setLeft(left + 1)} >Left</button>
+      <button onClick={()=>setRight(right +1)}>Right</button>
+      {right}
     </div>
   )
 }
